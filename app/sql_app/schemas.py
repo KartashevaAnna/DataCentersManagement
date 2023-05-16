@@ -1,12 +1,20 @@
 from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
-class WeatherReportPydantic(BaseModel):
-    id: int
-    name: str
-    temperature: str
+class WeatherSchema(BaseModel):
+    temp: float
+    pressure: float
+    humidity: float
 
-    class Config:
-        orm_mode = True
+
+class WindSchema(BaseModel):
+    speed: float
+    gust: float
+
+
+class WeatherReportSchema(BaseModel):
+    main: WeatherSchema
+    wind: WindSchema
+    name: str = Field(..., description="city name")
