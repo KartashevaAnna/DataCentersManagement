@@ -73,6 +73,7 @@ from app.sql_app.database import engine, SessionLocal, Base
 #     db.close()
 #     print(cities)
 
+
 # app = FastAPI()
 def build_app() -> fastapi.FastAPI:
     Base.metadata.create_all(bind=engine)
@@ -82,6 +83,7 @@ def build_app() -> fastapi.FastAPI:
     )
     app.include_router(router)
     return app
+
 
 # @app.on_event("startup")
 # # @repeat_every(seconds=60 * 60)
