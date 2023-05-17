@@ -9,9 +9,9 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi_utils.tasks import repeat_every
 
-from app.sql_app.database import SessionLocal
-from app.sql_app.models import WeatherReport
-from app.sql_app.schemas import WeatherReportSchema
+from weather.sql_app.database import SessionLocal
+from weather.sql_app.models import WeatherReport
+from weather.sql_app.schemas import WeatherReportSchema
 
 load_dotenv()
 APIKEY = os.getenv("OPENWEATHERAPIKEY")
@@ -36,9 +36,7 @@ async def get_weather_reports(cities: List[str]) -> List[WeatherReportSchema]:
             # response = await client.get(url)
             # response = response.json()
             from tmp2 import response
-
             tmp = WeatherReportSchema(**response)
-            # tmp = WeatherReportSchema(**response)
             weather_report.append(tmp)
         return weather_report
 
@@ -67,4 +65,5 @@ def run_loop(app: FastAPI):
         weather_reports = await get_weather_reports(cities)
         for weather in weather_reports:
             save_to_db(weather)
+        print("loop finished")
         return "OK"
