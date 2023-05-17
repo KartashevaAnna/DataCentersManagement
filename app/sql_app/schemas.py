@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 from pydantic import BaseModel, Field
 
@@ -11,7 +11,7 @@ class WeatherSchema(BaseModel):
 
 class WindSchema(BaseModel):
     speed: float
-    gust: float
+    gust: Optional[float] = None
 
 
 class WeatherReportSchema(BaseModel):

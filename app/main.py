@@ -1,12 +1,7 @@
-import os
-import asyncio
-import httpx
-from fastapi import FastAPI
 import fastapi
-from dotenv import load_dotenv
-from app.weather_app.routers import router
 
-from app.sql_app.database import engine, SessionLocal, Base
+from app.sql_app.database import engine, Base
+from app.weather_app.routers import router
 
 
 # load_dotenv()
@@ -52,7 +47,7 @@ from app.sql_app.database import engine, SessionLocal, Base
 #
 #
 #
-# async def request_weather():
+# async def get_weather():
 #     async with httpx.AsyncClient() as client:
 #         for city in CITIES:
 #             url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={APIKEY}&units=metric"
@@ -97,5 +92,5 @@ def build_app() -> fastapi.FastAPI:
 #
 #         # api_key(),
 #         # get_cities(),
-#         # request_weather(),
+#         # get_weather(),
 #     )

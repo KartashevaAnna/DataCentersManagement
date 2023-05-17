@@ -1,14 +1,20 @@
+import os
 from typing import List
 
 import httpx
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
+from dotenv import load_dotenv
 
 from app.sql_app.database import SessionLocal
 from app.sql_app.models import WeatherReport
 from app.sql_app.schemas import WeatherReportSchema
+
 from tmp import RESPONSE
+
+load_dotenv()
+APIKEY = os.getenv("OPENWEATHERAPIKEY")
 
 
 def get_largest_cities() -> List[str]:
@@ -26,10 +32,13 @@ async def get_weather_reports(cities: List[str]) -> List[WeatherReportSchema]:
     weather_report = []
     async with httpx.AsyncClient() as client:
         for city in cities:
-            # url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={APIKEY}&units=metric"
+            url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={APIKEY}&units=metric"
             # response = await client.get(url)
             # response = response.json()
-            tmp = WeatherReportSchema(**RESPONSE)
+            from tmp2 import response
+
+            tmp = WeatherReportSchema(**response)
+            # tmp = WeatherReportSchema(**response)
             weather_report.append(tmp)
         return weather_report
 

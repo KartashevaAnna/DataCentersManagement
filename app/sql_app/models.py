@@ -1,5 +1,6 @@
 from sqlalchemy import Float
 from sqlmodel import Column, Integer, String
+
 from app.sql_app.database import Base
 
 
