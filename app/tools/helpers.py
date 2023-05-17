@@ -6,12 +6,12 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
+from fastapi import FastAPI
+from fastapi_utils.tasks import repeat_every
 
 from app.sql_app.database import SessionLocal
 from app.sql_app.models import WeatherReport
 from app.sql_app.schemas import WeatherReportSchema
-
-from tmp import RESPONSE
 
 load_dotenv()
 APIKEY = os.getenv("OPENWEATHERAPIKEY")
@@ -57,3 +57,14 @@ def save_to_db(weather: WeatherReportSchema):
     )
     db.commit()
     db.close()
+
+
+def run_loop(app: FastAPI):
+    @app.on_event("startup")
+    @repeat_every(seconds=60 * 60)
+    async def get_weather_report():
+        cities = get_largest_cities()
+        weather_reports = await get_weather_reports(cities)
+        for weather in weather_reports:
+            save_to_db(weather)
+        return "OK"
