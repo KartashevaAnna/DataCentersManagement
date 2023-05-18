@@ -1,8 +1,8 @@
 import fastapi
 
-from weather.sql_app.database import engine, Base
-from weather.tools.helpers import run_loop
-from weather.weather_app.routers import router
+from app.sql_app.database import engine, Base
+from app.tools.helpers import run_loop
+from app.weather_app.routers import router
 
 
 def build_app() -> fastapi.FastAPI:
