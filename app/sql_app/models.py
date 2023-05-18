@@ -1,7 +1,7 @@
 from sqlalchemy import Float
 from sqlmodel import Column, Integer, String
 
-from weather.sql_app.database import Base
+from app.sql_app.database import Base
 
 
 class WeatherReport(Base):

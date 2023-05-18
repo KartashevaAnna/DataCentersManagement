@@ -9,9 +9,9 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi_utils.tasks import repeat_every
 
-from weather.sql_app.database import SessionLocal
-from weather.sql_app.models import WeatherReport
-from weather.sql_app.schemas import WeatherReportSchema
+from app.sql_app.database import SessionLocal
+from app.sql_app.models import WeatherReport
+from app.sql_app.schemas import WeatherReportSchema
 
 load_dotenv()
 APIKEY = os.getenv("OPENWEATHERAPIKEY")
