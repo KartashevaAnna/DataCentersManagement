@@ -4,6 +4,8 @@ from app.main import build_app
 
 
 def main():
+    """Run server."""
+
     uvicorn.run(
         "__main__:build_app",
         host="0.0.0.0",

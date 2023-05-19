@@ -6,7 +6,6 @@ from app.sql_app.database import Base
 
 class WeatherReport(Base):
     __tablename__ = "weather_report"
-
     id = Column(Integer, primary_key=True, index=True)
     city = Column(String)
     temperature = Column(Float)

@@ -18,6 +18,8 @@ APIKEY = os.getenv("OPENWEATHERAPIKEY")
 
 
 def get_largest_cities() -> List[str]:
+    """Get the list of 50 largest world cities."""
+
     session = requests.Session()
     html = session.get("https://en.wikipedia.org/wiki/List_of_largest_cities").content
     soup = BeautifulSoup(html, "html.parser")
@@ -29,19 +31,22 @@ def get_largest_cities() -> List[str]:
 
 
 async def get_weather_reports(cities: List[str]) -> List[WeatherReportSchema]:
+    """Get a weather report for each city."""
+
     weather_report = []
     async with httpx.AsyncClient() as client:
         for city in cities:
             url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={APIKEY}&units=metric"
-            # response = await client.get(url)
-            # response = response.json()
-            from tmp2 import response
-            tmp = WeatherReportSchema(**response)
-            weather_report.append(tmp)
+            response = await client.get(url)
+            response = response.json()
+            city_weather = WeatherReportSchema(**response)
+            weather_report.append(city_weather)
         return weather_report
 
 
 def save_to_db(weather: WeatherReportSchema):
+    """Save report to database."""
+
     db = SessionLocal()
     db.add(
         WeatherReport(
@@ -58,6 +63,8 @@ def save_to_db(weather: WeatherReportSchema):
 
 
 def run_loop(app: FastAPI):
+    """Run main loop: make a list of cities, request weather for them, save results to the database."""
+
     @app.on_event("startup")
     @repeat_every(seconds=60 * 60)
     async def get_weather_report():
@@ -65,5 +72,3 @@ def run_loop(app: FastAPI):
         weather_reports = await get_weather_reports(cities)
         for weather in weather_reports:
             save_to_db(weather)
-        print("loop finished")
-        return "OK"
