@@ -10,13 +10,13 @@
 
 ## Технологии
 
-Python 3.11
-FastAPI
-Pydantic
-SQLAlchemy
-Pandas
-SQLite3
-Docker
+- Python 3.11
+- FastAPI
+- Pydantic
+- SQLAlchemy
+- Pandas
+- SQLite3
+- Docker
 
 ## Как развернуть проект
 
